@@ -62,25 +62,27 @@ main, header {
 
 main {
   height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  position: relative;
 }
 
 .intro {
-  flex: 1;
 }
 
 .player {
   text-align: center;
   height: 565px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
 }
 
 
 .intro {
+  position: relative;
   width: 800px;
   margin: auto;
   padding-top: 3*$lh;
+  z-index: 100;
 }
 
 .block {
