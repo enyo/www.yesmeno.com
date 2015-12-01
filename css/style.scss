@@ -1,0 +1,114 @@
+---
+---
+
+@import "bourbon/bourbon";
+
+$lh: 1.5rem;
+$color--highlight: #FF0069;
+
+@include keyframes(highlight) {
+  from {
+    background-color: $color--highlight;
+  }
+  to {
+    background-color: transparentize($color--highlight, 1);
+  }
+}
+
+
+html, body {
+  height: 100%;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+body {
+  //background: url('../images/MENO.jpg') no-repeat bottom left black;
+  background-color: black;
+  background-size: auto 80%;
+}
+
+h1, h2 {
+  margin: 0;
+}
+p {
+  margin: 0;
+}
+
+%font-stack--body {
+  font-family: "FrutigerNeueLTPro-Book", sans-serif;
+  font-weight: 100;
+  color: #E8E8E8;
+  line-height: $lh;
+}
+%font-stack--title {
+  font-family: "FrutigerNeueLTPro-Bold", sans-serif;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  text-transform: uppercase;
+  line-height: 2*$lh;
+}
+
+
+body {
+  //display: flex;
+}
+
+
+main, header {
+  //flex: 1;
+}
+
+main {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.intro {
+  flex: 1;
+}
+
+.player {
+  text-align: center;
+  height: 565px;
+}
+
+
+.intro {
+  width: 800px;
+  margin: auto;
+  padding-top: 3*$lh;
+}
+
+.block {
+  width: 360px;
+  &:nth-child(1) {
+    margin-right: 40px;
+  }
+  float: left;
+  &__header {
+    @extend %font-stack--title;
+  }
+
+  &:nth-child(2) {
+    .block__lyrics {
+      color: $color--highlight;
+    }
+  }
+  &__lyrics {
+    position: relative;
+    @extend %font-stack--body;
+    span {
+      &.highlighted {
+        @include animation(highlight 3s ease-out);
+      }
+    }
+  }
+
+}
+
+
+
