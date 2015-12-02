@@ -91,6 +91,9 @@ main {
     margin-right: 40px;
   }
   float: left;
+  &:hover {
+    @include animation(shake 0.1s linear);
+  }
   &__header {
     @extend %font-stack--title;
   }

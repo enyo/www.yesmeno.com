@@ -13,7 +13,6 @@ for (var i = 0, span; span = elements[i]; i++) {
 }
 
 function highlightPhrase(time) {
-  console.log(time);
   for (var i = 0, span; span = elements[i]; i++) {
     span.classList.remove('highlighted');
   }
@@ -25,6 +24,43 @@ function highlightPhrase(time) {
   }
 }
 
+function shakeOnTime(time) {
+  for (var i = 0; i < shakeTimes.length; i++) {
+    var shakeTime = shakeTimes[i];
+    console.log(shakeTime);
+    if (shakeTime > time && shakeTime < time + 0.5) {
+      shake();
+    }
+  }
+}
+
+
+var shakeTimes = [10.4], lastShake = 0;
+var introElement = document.querySelector('.intro');
+function shake() {
+  if (new Date().getTime() < lastShake + 1000) return;
+
+  lastShake = new Date().getTime();
+  var _shake = function (reset) {
+    var x, y;
+    if (reset) {
+      x = 0;
+      y = 0;
+    }
+    else {
+      x = Math.random() * 2;
+      y = Math.random() * 8;
+    }
+    introElement.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+  };
+  var delay = 30;
+  for (var i = 0; i < 8; i++) {
+    setTimeout(_shake, i * delay);
+  }
+  setTimeout(function () {
+    _shake(true);
+  }, i * delay);
+}
 
 // 2. This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement('script');
@@ -57,7 +93,7 @@ function onYouTubeIframeAPIReady() {
 
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
-  event.target.playVideo();
+  //event.target.playVideo();
 }
 
 // 5. The API calls this function when the player's state changes.
@@ -89,6 +125,7 @@ function _updateTime() {
     exactTime += intervalDelay / 1000;
   }
   highlightPhrase(exactTime);
+  shakeOnTime(exactTime);
 }
 
 function stopFollowingTime() {
