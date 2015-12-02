@@ -19,17 +19,19 @@
       <h1 class="block__header">Flashlights</h1>
 
       <div class="block__lyrics">
-        <span data-time="28">There was something,</span>
-        <span data-time="30.5">in the flashlights</span>,
-        <span data-time="32.6">and</span>
-        <span data-time="32.8">like</span>
-        <span data-time="33">a pack</span>
-        <span data-time="33.2">of vultures</span>
-        <span data-time="35">they circled through the night.</span>
-        <span data-time="37">They would cheer and cry</span>,
-        <span data-time="39">with their hands up high</span> –
-        <span data-time="42">it could have been for me...</span>
-        <span data-time="44">just imagine that.</span>
+        <span data-time="28.5">There was something,</span>
+        <span data-time="30.7">in the flashlights</span>,
+        <span data-time="32.8">and</span>
+        <span data-time="32.95">like</span>
+        <span data-time="33.2">a</span>
+        <span data-time="33.4">pack</span>
+        <span data-time="33.7">of</span>
+        <span data-time="34">vultures</span>
+        <span data-time="35.2">they circled through the night.</span>
+        <span data-time="37.3">They would cheer and cry</span>,
+        <span data-time="39.5">with their hands up high</span> –
+        <span data-time="41.9">it could have been for me...</span>
+        <span data-time="44.2">just imagine that.</span>
       </div>
     </div>
 
@@ -37,8 +39,14 @@
       <h1 class="block__header">&nbsp;</h1>
 
       <div class="block__lyrics">
-        I wanna been rich and then some. Smooth and loud. I wanna go elsewhere, you can stay and hold the door. I wanna
-        be loved and cherished, like your favourite book – I want it all right here, right now, ah ah ah aaah.
+        I wanna been rich and then some.
+        Smooth and loud.
+        I wanna go elsewhere,
+        you can stay and hold the door.
+        I wanna be loved and cherished,
+        like your favourite book –
+        I want it all right here,
+        right now, ah ah ah aaah.
       </div>
     </div>
   </section>
@@ -50,92 +58,4 @@
 
 </main>
 
-<script>
-  var phrases = [], elements = document.querySelectorAll('.block__lyrics span');
-
-  for (var i = 0, span; span = elements[i]; i++) {
-    var time = parseFloat(span.getAttribute('data-time'));
-    if (isNaN(time)) break;
-
-    phrases.push({
-      start: time,
-      end: 10000,
-      element: span
-    });
-    if (i > 0) phrases[i - 1].end = time;
-  }
-  console.log(phrases);
-
-  function highlightPhrase(time) {
-    for (var i = 0, span; span = elements[i]; i++) {
-      span.classList.remove('highlighted');
-    }
-
-    for (var ii = 0, phrase; phrase = phrases[ii]; ii++) {
-      if (phrase.start < time && phrase.end > time) {
-        phrase.element.classList.add('highlighted');
-      }
-    }
-  }
-
-
-  // 2. This code loads the IFrame Player API code asynchronously.
-  var tag = document.createElement('script');
-
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  // 3. This function creates an <iframe> (and YouTube player)
-  //    after the API code downloads.
-  var player;
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: '565',
-      width: '1000',
-      videoId: 'ph1C-dtR8aM',
-      playerVars: {
-        modestbranding: 1,
-        showinfo: 0,
-        controls: 1,
-        rel: 0
-      },
-      events: {
-        'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
-      }
-    });
-  }
-
-  // 4. The API will call this function when the video player is ready.
-  function onPlayerReady(event) {
-    event.target.playVideo();
-  }
-
-  // 5. The API calls this function when the player's state changes.
-  function onPlayerStateChange(event) {
-    if (event.data == YT.PlayerState.PLAYING) {
-      startFollowingTime();
-    }
-    else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
-      stopFollowingTime();
-    }
-  }
-
-  var intervalId;
-  function startFollowingTime() {
-    if (!intervalId) {
-      intervalId = setInterval(_updateTime, 10);
-    }
-  }
-  function _updateTime() {
-    highlightPhrase(player.getCurrentTime());
-  }
-  function stopFollowingTime() {
-    clearInterval(intervalId);
-    intervalId = null;
-  }
-  function stopVideo() {
-    player.stopVideo();
-  }
-</script>
+<script src="script/app.js"></script>
