@@ -27,7 +27,6 @@ function highlightPhrase(time) {
 function shakeOnTime(time) {
   for (var i = 0; i < shakeTimes.length; i++) {
     var shakeTime = shakeTimes[i];
-    console.log(shakeTime);
     if (shakeTime > time && shakeTime < time + 0.5) {
       shake();
     }
@@ -35,30 +34,38 @@ function shakeOnTime(time) {
 }
 
 
-var shakeTimes = [10.4], lastShake = 0;
+var shakeTimes = [11], lastShake = 0;
 var introElement = document.querySelector('.intro');
 function shake() {
   if (new Date().getTime() < lastShake + 1000) return;
 
   lastShake = new Date().getTime();
-  var _shake = function (reset) {
-    var x, y;
+  var _shake = function (strength, reset) {
+    var x, y, opacity;
     if (reset) {
       x = 0;
       y = 0;
+      opacity = 1;
     }
     else {
-      x = Math.random() * 2;
-      y = Math.random() * 8;
+      var xVariance = strength * 10, yVariance = strength * 40;
+      x = xVariance / 2 - Math.random() * xVariance;
+      y = yVariance / 2 - Math.random() * yVariance;
+      opacity = Math.random() * 0.5 + 0.5;
     }
     introElement.style.transform = 'translate(' + x + 'px, ' + y + 'px)';
+    introElement.style.opacity = opacity;
   };
-  var delay = 30;
-  for (var i = 0; i < 8; i++) {
-    setTimeout(_shake, i * delay);
+  var delay = 30, steps = 15;
+  for (var i = 0; i < steps; i++) {
+    (function (i) {
+      setTimeout(function () {
+        _shake((steps - i) / steps)
+      }, i * delay);
+    })(i);
   }
   setTimeout(function () {
-    _shake(true);
+    _shake(0, true);
   }, i * delay);
 }
 
