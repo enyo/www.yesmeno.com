@@ -2,6 +2,7 @@
 ---
 
 @import "bourbon/bourbon";
+@import "normalize";
 
 $lh: 1.5rem;
 $color--highlight: #FF0069;
@@ -47,7 +48,8 @@ p {
   font-weight: bold;
   font-size: 1rem;
   text-transform: uppercase;
-  line-height: 2*$lh;
+  line-height: 3*$lh;
+  height: 3*$lh;
 }
 
 
@@ -65,46 +67,62 @@ main {
   position: relative;
 }
 
-.intro {
-}
 
 .player {
-  text-align: center;
-  height: 565px;
-  width: 100%;
   position: absolute;
+  height: 720px;
+  width: 100%;
   bottom: 0;
+  overflow: hidden;
+  iframe {
+    position: absolute;
+    bottom: 0;
+    width: 1280px;
+    height: 720px;
+    left: 50%;
+    margin-left: -(1280px/2);
+    vertical-align: bottom;
+  }
 }
 
 
 .intro {
   position: relative;
-  width: 800px;
+  width: 600px;
   margin: auto;
-  padding-top: 3*$lh;
   z-index: 100;
+  &__title {
+    margin: 0;
+    width: 100%;
+    padding-top: $lh;
+    img {
+      width: 100%;
+    }
+  }
 }
 
 .block {
-  width: 360px;
-  &:nth-child(1) {
+  width: 280px;
+  float: left;
+  position: relative;
+  &:nth-of-type(1) {
     margin-right: 40px;
   }
-  float: left;
-  &:hover {
-    @include animation(shake 0.1s linear);
-  }
-  &__header {
+  &__header, &__header--icons {
     @extend %font-stack--title;
   }
-
-  &:nth-child(2) {
-    .block__lyrics {
-      color: $color--highlight;
+  &__header--icons {
+    text-align: center;
+    img {
+      display: inline-block;
+      vertical-align: middle;
     }
   }
-  &__lyrics {
-    position: relative;
+
+  &__lyrics, &__lyrics--chorus, &__lyrics--second-verse {
+    position: absolute;
+    left: 0;
+    top: 3*$lh;
     @extend %font-stack--body;
     span {
       &.highlighted {
@@ -112,8 +130,28 @@ main {
       }
     }
   }
-
+  &__lyrics--chorus {
+    color: $color--highlight;
+  }
+  &__lyrics {
+    transform: translateX(0);
+  }
+  &__lyrics--second-verse {
+    opacity: 0;
+    transform: translateX(3em);
+  }
+  &__lyrics, &__lyrics--second-verse {
+    transition: all 0.2s ease-out;
+  }
+  &.second-verse {
+    .block__lyrics {
+      opacity: 0;
+      transform: translateX(-3em);
+    }
+    .block__lyrics--second-verse {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
 }
-
-
 
