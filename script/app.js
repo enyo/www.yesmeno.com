@@ -2,23 +2,29 @@ var phrases = [], elements = document.querySelectorAll('span[data-time]');
 
 
 var events = {
-    appear: {time: 28, active: false},
-    switchVerse: {time: 90, active: false}
+    appear: {time: 27, active: false},
+    switchVerse: {time: 89, active: false}
 };
 
 function handleEvent(time) {
     if (time > events.appear.time && !events.appear.active) {
-        events.appear.active = true;
         // Make everything appear
+        events.appear.active = true;
+        document.querySelector('.intro').classList.add('lyrics-visible');
     }
+    else if (time < events.appear.time && events.appear.active) {
+        events.appear.active = false;
+        document.querySelector('.intro').classList.remove('lyrics-visible');
+    }
+
     if (time > events.switchVerse.time && !events.switchVerse.active) {
-        events.switchVerse.active = true;
         // Show verse 2
+        events.switchVerse.active = true;
         document.querySelector('.block').classList.add('second-verse');
     }
     else if (time < events.switchVerse.time && events.switchVerse.active) {
+        // Hide verse 2
         events.switchVerse.active = false;
-        // Show verse 2
         document.querySelector('.block').classList.remove('second-verse');
     }
 }
@@ -33,7 +39,7 @@ for (var i = 0, span; span = elements[i]; i++) {
         element: span
     });
 
-    if (i > 0) {
+    if (i > 0 && time != phrases[i -1].start) {
         phrases[i - 1].end = Math.min(phrases[i - 1].end, time);
     }
 }
@@ -73,7 +79,7 @@ function shake() {
             opacity = 1;
         }
         else {
-            var xVariance = strength * 5, yVariance = strength * 15;
+            var xVariance = strength * 5, yVariance = strength * 10;
             x = xVariance / 2 - Math.random() * xVariance;
             y = yVariance / 2 - Math.random() * yVariance;
             opacity = Math.random() * 0.5 + 0.5;

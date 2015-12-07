@@ -16,6 +16,18 @@ $color--highlight: #FF0069;
   }
 }
 
+@include keyframes(line-fade-in) {
+  from {
+    transform: translateY(-1em);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
 
 html, body {
   height: 100%;
@@ -105,6 +117,7 @@ main {
   width: 280px;
   float: left;
   position: relative;
+  transform: translate3d(0, 0, 0); // Avoid flickering of font when video starts playing
   &:nth-of-type(1) {
     margin-right: 40px;
   }
@@ -120,6 +133,22 @@ main {
   }
 
   &__lyrics, &__lyrics--chorus, &__lyrics--second-verse {
+    &__line {
+      white-space: nowrap;
+      opacity: 0;
+      .lyrics-visible & {
+        @include animation(line-fade-in 0.3s ease-out);
+        @include animation-fill-mode(forwards);
+        //opacity: 1;
+      }
+      &:nth-of-type(2) { @include animation-delay(0.05s); }
+      &:nth-of-type(3) { @include animation-delay(0.1s); }
+      &:nth-of-type(4) { @include animation-delay(0.15s); }
+      &:nth-of-type(5) { @include animation-delay(0.2s); }
+      &:nth-of-type(6) { @include animation-delay(0.28s); }
+      &:nth-of-type(7) { @include animation-delay(0.35s); }
+    }
+
     position: absolute;
     left: 0;
     top: 3*$lh;
@@ -141,7 +170,7 @@ main {
     transform: translateX(3em);
   }
   &__lyrics, &__lyrics--second-verse {
-    transition: all 0.2s ease-out;
+    transition: all 0.5s ease-out;
   }
   &.second-verse {
     .block__lyrics {
