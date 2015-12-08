@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.2 (15855) - http://www.bohemiancoding.com/sketch -->
+    <title>heart-icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Desktop-HD" sketch:type="MSArtboardGroup" transform="translate(-900.000000, -338.000000)" fill="#FF0069">
+            <g id="heart-icon" sketch:type="MSLayerGroup" transform="translate(900.000000, 338.000000)">
+                <path d="M12.3333333,20 C28.1724403,9.75345836 17.4982595,1.15958472 12.3333333,6.77865594 C7.16840713,1.15958472 -3.50577368,9.75345836 12.3333333,20 Z" id="For-You" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

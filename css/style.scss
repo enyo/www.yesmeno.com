@@ -27,6 +27,29 @@ $color--highlight: #FF0069;
   }
 }
 
+@include keyframes(blackout) {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@include keyframes(heartbeat) {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+    transform: scale(1, 1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(8, 8);
+  }
+}
+
 
 
 html, body {
@@ -103,6 +126,9 @@ main {
   width: 600px;
   margin: auto;
   z-index: 100;
+  &.blackout {
+    @include animation(blackout 5s ease-in);
+  }
   &__title {
     margin: 0;
     width: 100%;
@@ -124,8 +150,20 @@ main {
   &__header, &__header--icons {
     @extend %font-stack--title;
   }
+  &__header {
+    opacity: 0;
+    .lyrics-visible & {
+      @include animation(line-fade-in 0.3s ease-out);
+      @include animation-fill-mode(forwards);
+    }
+  }
   &__header--icons {
     text-align: center;
+    transform: translateX(-10.3em);
+    transition: transform 0.4s ease-out;
+    .lyrics-visible & {
+      transform: translateX(0);
+    }
     img {
       display: inline-block;
       vertical-align: middle;
@@ -139,7 +177,6 @@ main {
       .lyrics-visible & {
         @include animation(line-fade-in 0.3s ease-out);
         @include animation-fill-mode(forwards);
-        //opacity: 1;
       }
       &:nth-of-type(2) { @include animation-delay(0.05s); }
       &:nth-of-type(3) { @include animation-delay(0.1s); }
@@ -154,8 +191,24 @@ main {
     top: 3*$lh;
     @extend %font-stack--body;
     span {
+      position: relative;
+      display: inline-block;
       &.highlighted {
         @include animation(highlight 3s ease-out);
+      }
+      .heart {
+        opacity: 0;
+        content: '';
+        height: $lh;
+        width: $lh;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        margin-left: -($lh/2);
+        background: url("../images/heart-icon.svg") top left no-repeat;
+        &.beat {
+          @include animation(heartbeat 0.6s ease-out);
+        }
       }
     }
   }
