@@ -157,7 +157,7 @@ function onYouTubeIframeAPIReady() {
     playerVars: {
       modestbranding: 1,
       showinfo: 0,
-      controls: 1,
+      controls: 0,
       rel: 0
     },
     events: {

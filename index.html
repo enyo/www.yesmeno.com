@@ -3,146 +3,80 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>MENO</title>
+<title>Meno</title>
 
-<link href="css/style.css" rel="stylesheet">
-
-<main>
-
-  <section class="intro">
-    <h1 class="intro__title">
-      <img src="images/MENO-font.svg" alt="MENO">
-    </h1>
-
-    <div class="block">
-      <h1 class="block__header">Flashlights</h1>
-
-      <div class="block__lyrics">
-        <div class="block__lyrics__line">
-          <span data-time="28.44">There was something</span>,
-          <span data-time="30.68">in the flashlights</span>,
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="32.76">and</span>
-          <span data-time="32.92">like</span>
-          <span data-time="33.2">a</span>
-          <span data-time="33.36">pack</span>
-          <span data-time="33.68">of</span>
-          <span data-time="33.92">vultures</span>
-          <span data-time="35.16">they circled</span>
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="35.16">through the night</span>.
-
-          <span data-time="37.3">They would cheer</span>
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="37.3">and cry</span>,
-          <span data-time="39.5">with their hands up high</span> –
-          <span data-time="41.9">it</span>
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="41.9">could have been for me...</span>
-          <span data-time="44.2">just imagine</span>
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="44.2">that</span>.
-        </div>
-      </div>
+<!-- <link href='http://fonts.googleapis.com/css?family=Lora:400,400italic,700italic' rel='stylesheet' type='text/css'> -->
 
 
-      <div class="block__lyrics--second-verse">
-        <div class="block__lyrics__line">
-          <span data-time="91.32">You want something?</span>
-          <span data-time="93.56">Something</span>
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="93.56">special?</span>
-          <span data-time="95.56">And</span>,
-          <span data-time="95.76">like</span>,
-          <span data-time="96.16">a pack</span>,
-          <span data-time="96.76">of vultures</span>,
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="98.08">you would have torn it down.</span>
-          <span data-time="99.96">Still</span>
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="100.24">they</span>
-          <span data-time="100.68">get</span>
-          <span data-time="100.92">it</span>
-          <span data-time="101.24">all</span>!
-          <span data-time="102.48">Their face up on</span>
-          <span data-time="103.16">the</span>
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="103.4">wall</span>.
-          <span data-time="104.64">It should have been for me</span>...
-          <span data-time="107.04">just</span>
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="107.04">remember that!</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="block">
-      <div class="block__header--icons">
-        <a href="javascript:undefined"><img src="images/social-facebook.svg" alt="Facebook"></a>
-        <a href="javascript:undefined"><img src="images/social-twitter.svg" alt="Twitter"></a>
-        <a href="javascript:undefined"><img src="images/social-youtube.svg" alt="Youtube"></a>
-      </div>
-      <div class="block__lyrics--chorus">
-        <div class="block__lyrics__line">
-          <span data-time="55.32">I wanna been rich and then some.</span>
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="57.56">Smooth and loud.</span>
-          <span data-time="59.28">I wanna go</span>
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="59.84">else</span><span data-time="60.12">where,</span>
-          <span data-time="60.4">you</span>
-          <span data-time="60.64">can</span>
-          <span data-time="61.0">stay</span>
-          <span data-time="61.28">and</span>
-          <span data-time="61.6">hold</span>
-          <span data-time="61.76">the</span>
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="61.88">door</span>.
-          <span data-time="63.76">I wanna be</span>
-          <span data-time="64.32">loved<span class="heart"></span></span>
-          <span data-time="64.68">and</span>
-          <span data-time="65.08">cherished</span>,
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="66.52">like</span>
-          <span data-time="66.84">your</span>
-          <span data-time="67.04">favourite book</span> –
-          <span data-time="68.12">I</span>
-          <span data-time="68.2">want</span>
-          <span data-time="68.28">it</span>
-          <span data-time="68.44">all</span>
-        </div>
-        <div class="block__lyrics__line">
-          <span data-time="68.8">right here</span>,
-          <span data-time="69.36">right now</span>,
-          <span data-time="69.88">ah</span>
-          <span data-time="70.16">ah</span>
-          <span data-time="70.44">ah</span>
-          <span data-time="70.8">aaah</span>.
-        </div>
-      </div>
-    </div>
-
-  </section>
-
-  <section class="player" style="opacity: 0;">
-    <div id="player"></div>
-  </section>
+<style>
 
 
-</main>
+  html, body {
+    position: relative;
+    height: 100%;
+    margin: 0;
+  }
+  body {
+    background: #333;
+    padding: 1px 0;
 
-<script src="script/app.js"></script>
+    color: #ddd;
+    text-align: center;
+    font-size: 24px;
+    font-family: 'Lora', serif;
+
+    background: #FC354C;
+    background: -webkit-linear-gradient(180deg, #FC354C 10%, #0ABFBC 90%); /* Chrome 10+, Saf5.1+ */
+    background:    -moz-linear-gradient(180deg, #FC354C 10%, #0ABFBC 90%); /* FF3.6+ */
+    background:     -ms-linear-gradient(180deg, #FC354C 10%, #0ABFBC 90%); /* IE10 */
+    background:      -o-linear-gradient(180deg, #FC354C 10%, #0ABFBC 90%); /* Opera 11.10+ */
+    background:         linear-gradient(180deg, #FC354C 10%, #0ABFBC 90%); /* W3C */
+  }
+
+  h1 {
+    font-size: 80px;
+    font-weight: 400;
+    font-style: italic;
+    /*text-shadow: 1px 1px 0 #444;*/
+    margin: 1.3em 0 0.8em 0;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  h1 img {
+    width: 280px;
+  }
+  p {
+    font-size: 18px;
+    margin-top: 0;
+    font-family: "helvetica neue", sans-serif;
+    font-weight: 100;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.1em;
+  }
+
+  @media screen and (min-width: 500px) {
+    h1 { font-size: 100px; }
+    h1 img { width: 300px; }
+    p { font-size: 20px; }
+  }
+
+  @media screen and (min-width: 800px) {
+    h1 { font-size: 120px; }
+    h1 img { width: 350px; }
+    p { font-size: 22px; }
+  }
+
+  @media screen and (min-width: 1200px) {
+    h1 { font-size: 140px; }
+    h1 img { width: 400px; }
+    p { font-size: 24px; }
+  }
+
+
+</style>
+
+
+<h1><img src="meno.svg" alt="meno"></h1>
+
+
+<p>Album coming soon</p>
+
