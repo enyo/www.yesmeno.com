@@ -18,11 +18,11 @@ $color--highlight: #FF0069;
 
 @include keyframes(line-fade-in) {
   from {
-    transform: translateY(-1em);
+    @include transform(translateY(-1em));
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    @include transform(translateY(0));
     opacity: 1;
   }
 }
@@ -42,11 +42,11 @@ $color--highlight: #FF0069;
   }
   5% {
     opacity: 1;
-    transform: scale(1, 1);
+    @include transform(scale(1, 1));
   }
   100% {
     opacity: 0;
-    transform: scale(8, 8);
+    @include transform(scale(8, 8));
   }
 }
 
@@ -143,7 +143,7 @@ main {
   width: 280px;
   float: left;
   position: relative;
-  transform: translate3d(0, 0, 0); // Avoid flickering of font when video starts playing
+  @include transform(translate3d(0, 0, 0)); // Avoid flickering of font when video starts playing
   &:nth-of-type(1) {
     margin-right: 40px;
   }
@@ -159,10 +159,13 @@ main {
   }
   &__header--icons {
     text-align: center;
-    transform: translateX(-10.3em);
-    transition: transform 0.4s ease-out;
+    @include transform(translateX(-10.3em));
+
+    @include transition-property(transform);
+    @include transition-duration(0.4s);
+    @include transition-timing-function(ease-out);
     .lyrics-visible & {
-      transform: translateX(0);
+      @include transform(translateX(0));
     }
     img {
       display: inline-block;
@@ -216,23 +219,23 @@ main {
     color: $color--highlight;
   }
   &__lyrics {
-    transform: translateX(0);
+    @include transform(translateX(0));
   }
   &__lyrics--second-verse {
     opacity: 0;
-    transform: translateX(3em);
+    @include transform(translateX(3em));
   }
   &__lyrics, &__lyrics--second-verse {
-    transition: all 0.5s ease-out;
+    @include transition(all 0.5s ease-out);
   }
   &.second-verse {
     .block__lyrics {
       opacity: 0;
-      transform: translateX(-3em);
+      @include transform(translateX(-3em));
     }
     .block__lyrics--second-verse {
       opacity: 1;
-      transform: translateX(0);
+      @include transform(translateX(0));
     }
   }
 }
