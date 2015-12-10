@@ -15,23 +15,29 @@
     position: relative;
     height: 100%;
     margin: 0;
+    padding: 0;
+    font-size: 24px;
   }
   body {
     background: black url("images/MENO.jpg") no-repeat left bottom;
-    padding: 1px 0;
-
+    background-size: contain;
     color: #ddd;
     text-align: center;
-    font-size: 24px;
     font-family: 'Lora', serif;
   }
-
+  .container {
+    padding: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   h1 {
     font-size: 80px;
     font-weight: 400;
     font-style: italic;
     /*text-shadow: 1px 1px 0 #444;*/
-    margin: 1.3em 0 0.8em 0;
+    margin: 0 0 0.4rem;
     color: rgba(255, 255, 255, 0.9);
   }
   h1 img {
@@ -39,7 +45,7 @@
   }
   p {
     font-size: 18px;
-    margin-top: 0;
+    margin: 0;
     font-family: "helvetica neue", sans-serif;
     font-weight: 100;
     color: rgba(255, 255, 255, 0.6);
@@ -67,9 +73,10 @@
 
 </style>
 
-
-<h1><img src="images/meno.svg" alt="meno"></h1>
-
-
-<p>Album coming soon</p>
+<div class="container">
+  <div class="container_text">
+    <h1><img src="images/meno.svg" alt="meno"></h1>
+    <p>Album coming soon</p>
+  </div>
+</div>
 
