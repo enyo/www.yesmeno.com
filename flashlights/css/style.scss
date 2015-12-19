@@ -139,15 +139,23 @@ main {
   width: 600px;
   margin: auto;
   z-index: 100;
+  padding-top: 3*$lh;
   &.blackout {
     @include animation(blackout 5s ease-in);
   }
   &__title {
+    position: relative;
     margin: 0;
     width: 100%;
-    padding-top: $lh;
+    height: 160px;
+    margin-bottom: $lh;
     img {
-      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      margin-left: -86px;
+      margin-top: -96px;
+      width: calc(100% + 172px);
     }
   }
 }
@@ -177,6 +185,7 @@ main {
   }
   &__header--icons {
     text-align: center;
+    z-index: 1000;
     @include transform(translateX(-10.3em));
 
     @include transition-property(transform);
@@ -184,6 +193,10 @@ main {
     @include transition-timing-function(ease-out);
     .lyrics-visible & {
       @include transform(translateX(0));
+    }
+    a {
+      height: 3*$lh;
+      display: inline-block;
     }
     img {
       display: inline-block;
