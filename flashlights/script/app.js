@@ -13,9 +13,12 @@ var events = {
     time: 163, active: false, in: function () {
       document.querySelector('.intro').classList.add('lyrics-invisible');
       document.querySelector('.intro').classList.remove('lyrics-visible');
-    }, out: function () {
+    }, out: function (time) {
       document.querySelector('.intro').classList.remove('lyrics-invisible')
-      document.querySelector('.intro').classList.add('lyrics-visible')
+      if (time > events.appear.time) {
+        // Make sure that the lyrics appear properly when necessary
+        document.querySelector('.intro').classList.add('lyrics-visible')
+      }
     }
   },
   switchVerse: {
@@ -41,12 +44,12 @@ function handleEvent(time) {
       if (time > event.time && !event.active) {
         if (!event.endTime || time < event.endTime) {
           event.active = true;
-          event.in();
+          event.in(time);
         }
       }
       else if (time < event.time && event.active) {
         event.active = false;
-        event.out();
+        event.out(time);
       }
     }
   }
