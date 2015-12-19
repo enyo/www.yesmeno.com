@@ -320,17 +320,17 @@ main {
   .player {
     opacity: 0;
     position: absolute;
-    height: 720px;
-    width: 100%;
+    width: 100vw;
+    height: 100vh;
     bottom: 0;
     overflow: hidden;
     iframe {
       position: absolute;
-      bottom: 0;
-      width: 1280px;
-      height: 720px;
+      top: 0;
+      width: calc(100vh * 1.8);
+      height: 100vh;
       left: 50%;
-      margin-left: -(1280px/2);
+      margin-left: calc((-100vh * 1.8) / 2);
       vertical-align: bottom;
     }
     &__mouse-capture {
