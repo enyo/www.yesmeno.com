@@ -198,7 +198,10 @@ function onYouTubeIframeAPIReady() {
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
   totalDuration = event.target.getDuration();
-  event.target.playVideo();
+  if (typeof window.orientation === 'undefined') {
+    // Only autoplay on desktops
+    event.target.playVideo();
+  }
 }
 
 // 5. The API calls this function when the player's state changes.
@@ -220,7 +223,7 @@ var intervalId, intervalDelay = 25;
 
 function startFollowingTime() {
   if (!intervalId) {
-    document.querySelector('.player').style.opacity = 1;
+    document.body.classList.add('video-loaded');
     intervalId = setInterval(_updateTime, intervalDelay);
   }
 }
