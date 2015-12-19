@@ -9,10 +9,10 @@ $color--highlight: #FF0069;
 
 @include keyframes(highlight) {
   from {
-    background-color: $color--highlight;
+    opacity: 1;
   }
   to {
-    background-color: transparentize($color--highlight, 1);
+    opacity: 0;
   }
 }
 
@@ -24,6 +24,15 @@ $color--highlight: #FF0069;
   to {
     @include transform(translateY(0));
     opacity: 1;
+  }
+}
+
+@include keyframes(line-fade-out) {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 
@@ -46,11 +55,9 @@ $color--highlight: #FF0069;
   }
   100% {
     opacity: 0;
-    @include transform(scale(8, 8));
+    @include transform(scale(10, 10));
   }
 }
-
-
 
 html, body {
   height: 100%;
@@ -58,6 +65,7 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
 body {
   //background: url('../images/MENO.jpg') no-repeat bottom left black;
   background-color: black;
@@ -67,6 +75,7 @@ body {
 h1, h2 {
   margin: 0;
 }
+
 p {
   margin: 0;
 }
@@ -77,6 +86,7 @@ p {
   color: #E8E8E8;
   line-height: $lh;
 }
+
 %font-stack--title {
   font-family: "FrutigerNeueLTPro-Bold", sans-serif;
   color: white;
@@ -87,11 +97,9 @@ p {
   height: 3*$lh;
 }
 
-
 body {
   //display: flex;
 }
-
 
 main, header {
   //flex: 1;
@@ -101,7 +109,6 @@ main {
   height: 100vh;
   position: relative;
 }
-
 
 .player {
   position: absolute;
@@ -119,7 +126,6 @@ main {
     vertical-align: bottom;
   }
 }
-
 
 .intro {
   position: relative;
@@ -156,6 +162,11 @@ main {
       @include animation(line-fade-in 0.3s ease-out);
       @include animation-fill-mode(forwards);
     }
+    .lyrics-invisible & {
+      opacity: 1;
+      @include animation(line-fade-out 0.3s ease-out);
+      @include animation-fill-mode(forwards);
+    }
   }
   &__header--icons {
     text-align: center;
@@ -180,13 +191,30 @@ main {
       .lyrics-visible & {
         @include animation(line-fade-in 0.3s ease-out);
         @include animation-fill-mode(forwards);
+        &:nth-of-type(2) {
+          @include animation-delay(0.05s);
+        }
+        &:nth-of-type(3) {
+          @include animation-delay(0.1s);
+        }
+        &:nth-of-type(4) {
+          @include animation-delay(0.15s);
+        }
+        &:nth-of-type(5) {
+          @include animation-delay(0.2s);
+        }
+        &:nth-of-type(6) {
+          @include animation-delay(0.28s);
+        }
+        &:nth-of-type(7) {
+          @include animation-delay(0.35s);
+        }
       }
-      &:nth-of-type(2) { @include animation-delay(0.05s); }
-      &:nth-of-type(3) { @include animation-delay(0.1s); }
-      &:nth-of-type(4) { @include animation-delay(0.15s); }
-      &:nth-of-type(5) { @include animation-delay(0.2s); }
-      &:nth-of-type(6) { @include animation-delay(0.28s); }
-      &:nth-of-type(7) { @include animation-delay(0.35s); }
+      .lyrics-invisible & {
+        opacity: 1;
+        @include animation(line-fade-out 0.30s ease-out);
+        @include animation-fill-mode(forwards);
+      }
     }
 
     position: absolute;
@@ -196,7 +224,17 @@ main {
     span {
       position: relative;
       display: inline-block;
-      &.highlighted {
+      .highlight {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: -0.2em;
+        right: -0.2em;
+        bottom: 0.2em;
+        border-radius: 1px;
+        background: $color--highlight;
+      }
+      &.highlighted .highlight {
         @include animation(highlight 3s ease-out);
       }
       .heart {
@@ -210,7 +248,7 @@ main {
         margin-left: -($lh/2);
         background: url("../images/heart-icon.svg") top left no-repeat;
         &.beat {
-          @include animation(heartbeat 0.6s ease-out);
+          @include animation(heartbeat 0.8s ease-out);
         }
       }
     }

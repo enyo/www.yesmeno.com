@@ -9,6 +9,15 @@ var events = {
       document.querySelector('.intro').classList.remove('lyrics-visible')
     }
   },
+  disappear: {
+    time: 163, active: false, in: function () {
+      document.querySelector('.intro').classList.add('lyrics-invisible');
+      document.querySelector('.intro').classList.remove('lyrics-visible');
+    }, out: function () {
+      document.querySelector('.intro').classList.remove('lyrics-invisible')
+      document.querySelector('.intro').classList.add('lyrics-visible')
+    }
+  },
   switchVerse: {
     time: 73.5, active: false, in: function () {
       document.querySelector('.block').classList.add('second-verse');
@@ -17,7 +26,7 @@ var events = {
     }
   },
   blackOut: {
-    time: 73.28, active: false, in: function () {
+    time: 73.28, endTime: 75, active: false, in: function () {
       document.querySelector('.intro').classList.add('blackout');
     }, out: function () {
       document.querySelector('.intro').classList.remove('blackout');
@@ -30,8 +39,10 @@ function handleEvent(time) {
     if (events.hasOwnProperty(eventName)) {
       var event = events[eventName];
       if (time > event.time && !event.active) {
-        event.active = true;
-        event.in();
+        if (!event.endTime || time < event.endTime) {
+          event.active = true;
+          event.in();
+        }
       }
       else if (time < event.time && event.active) {
         event.active = false;
@@ -60,6 +71,13 @@ function _parseTimeForElement(time, element) {
     heart: element.querySelector('.heart')
   });
 
+  if (!element.hasHighlightElement) {
+    var highlight = document.createElement('span');
+    highlight.className = 'highlight';
+    element.appendChild(highlight);
+    element.hasHighlightElement = true;
+  }
+
   if (length > 1) { // Not the first element, so we want to set the previous end time to this start time
     var prevPhrase = phrases[length - 2];
     if (time != prevPhrase.start && time > prevPhrase.start) { // But only if they don't start at the same time
@@ -85,9 +103,11 @@ function highlightPhrase(time) {
     if (phrase.start < time && phrase.end > time) {
       phrase.element.classList.add('highlighted');
       if (phrase.heart && !phrase.heart.classList.contains('beat')) {
-        !function(heart) {
+        !function (heart) {
           heart.classList.add('beat');
-          setTimeout(function() { heart.classList.remove('beat') }, 4000);
+          setTimeout(function () {
+            heart.classList.remove('beat')
+          }, 4000);
         }(phrase.heart);
       }
     }
@@ -137,6 +157,9 @@ function shake() {
     _shake(0, true);
   }, i * delay);
 }
+
+
+// Setup the Youtube Player
 
 // 2. This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement('script');
