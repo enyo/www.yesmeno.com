@@ -6,6 +6,7 @@
 
 $lh: 1.5rem;
 $color--highlight: #FF0069;
+$breakpoint: 660px;
 
 @include keyframes(highlight) {
   from {
@@ -97,49 +98,18 @@ p {
   height: 3*$lh;
 }
 
-body {
-  //display: flex;
-}
-
-main, header {
-  //flex: 1;
-}
-
 main {
   height: 100vh;
   position: relative;
 }
 
-.player {
-  position: absolute;
-  height: 720px;
-  width: 100%;
-  bottom: 0;
-  overflow: hidden;
-  iframe {
-    position: absolute;
-    bottom: 0;
-    width: 1280px;
-    height: 720px;
-    left: 50%;
-    margin-left: -(1280px/2);
-    vertical-align: bottom;
-  }
-  &__mouse-capture {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-}
 
 .intro {
   position: relative;
-  width: 600px;
+  max-width: 37.5rem;
   margin: auto;
   z-index: 100;
-  padding-top: 3*$lh;
+  padding: 3*$lh $lh 0 $lh;
   &.blackout {
     @include animation(blackout 5s ease-in);
   }
@@ -149,18 +119,21 @@ main {
     width: 100%;
     height: 160px;
     margin-bottom: $lh;
+    pointer-events: none;
     img {
       position: absolute;
       top: 0;
       left: 0;
-      margin-left: -86px;
+      margin-left: -17.5%;
       margin-top: -96px;
-      width: calc(100% + 172px);
+      width: 135%;
     }
   }
 }
 
+
 .block {
+
   width: 280px;
   float: left;
   position: relative;
@@ -298,6 +271,61 @@ main {
   }
 }
 
+
+@media only screen and (max-width: $breakpoint) {
+  .block.first, .block__lyrics, .block__lyrics--chorus {
+    display: none;
+  }
+  .intro__title {
+    // Very dirty to get approximate dimensions
+    height: 22vw;
+  }
+  .block {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+    &__header--icons {
+      @include transform(translateX(0));
+    }
+  }
+  .player {
+    width: 560px;
+    height: 315px;
+    max-width: 100%;
+    iframe {
+      width: 100%;
+      max-height: 315px;
+    }
+  }
+}
+
+
+@media only screen and (min-width: $breakpoint) {
+  .player {
+    position: absolute;
+    height: 720px;
+    width: 100%;
+    bottom: 0;
+    overflow: hidden;
+    iframe {
+      position: absolute;
+      bottom: 0;
+      width: 1280px;
+      height: 720px;
+      left: 50%;
+      margin-left: -(1280px/2);
+      vertical-align: bottom;
+    }
+    &__mouse-capture {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
 
 
 
