@@ -172,6 +172,8 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 //    after the API code downloads.
 var player;
 
+var isPlaying = false;
+
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
     height: '720',
@@ -192,15 +194,20 @@ function onYouTubeIframeAPIReady() {
 
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
+  totalDuration = event.target.getDuration();
   event.target.playVideo();
 }
 
 // 5. The API calls this function when the player's state changes.
 function onPlayerStateChange(event) {
   if (event.data == YT.PlayerState.PLAYING) {
+    isPlaying = true;
+    document.body.classList.remove('player-paused');
     startFollowingTime();
   }
   else if (event.data == YT.PlayerState.PAUSED || event.data == YT.PlayerState.ENDED) {
+    isPlaying = false;
+    document.body.classList.add('player-paused');
     stopFollowingTime();
   }
 }
@@ -215,7 +222,9 @@ function startFollowingTime() {
   }
 }
 
-var lastCurrentTime = -1, exactTime;
+// All in seconds
+var lastCurrentTime = -1, exactTime, totalDuration = 0;
+
 function _updateTime() {
   var currentTime = player.getCurrentTime();
   if (currentTime != lastCurrentTime) {
@@ -227,6 +236,7 @@ function _updateTime() {
   highlightPhrase(exactTime);
   shakeOnTime(exactTime);
   handleEvent(exactTime);
+  updateProgress(exactTime);
 }
 
 function stopFollowingTime() {
@@ -234,7 +244,37 @@ function stopFollowingTime() {
   intervalId = null;
 }
 
-function stopVideo() {
-  player.stopVideo();
-}
 
+document.querySelector('.player__mouse-capture').addEventListener('click', function() {
+  if (isPlaying) {
+    player.pauseVideo();
+  }
+  else {
+    player.playVideo();
+  }
+});
+
+var playerControls = document.querySelector('.player-controls');
+var playerControlsProgress = playerControls.querySelector('.player-controls__progress');
+var playerControlsCursorFollow = playerControls.querySelector('.player-controls__cursor-follow');
+function updateProgress(time) {
+  var percentage = 100 * time / totalDuration;
+  playerControlsProgress.style.width = percentage + '%';
+}
+document.querySelector('.player-controls__click-area').addEventListener('click', function(event) {
+  var offset = getMouseOffset(event);
+  var seekTime = totalDuration * offset / playerControls.clientWidth;
+  player.seekTo(seekTime);
+  updateProgress(seekTime);
+  player.playVideo();
+});
+document.querySelector('.player-controls__click-area').addEventListener('mousemove', function(event) {
+  var offset = getMouseOffset(event);
+  //var width = 100 * offset / playerControls.clientWidth;
+  playerControlsCursorFollow.style.width = offset + 'px';
+});
+
+function getMouseOffset(event) {
+  var rect = event.target.getBoundingClientRect();
+  return event.pageX - rect.left;
+}
