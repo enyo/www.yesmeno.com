@@ -224,12 +224,14 @@ main {
       .highlight {
         opacity: 0;
         position: absolute;
-        top: 0;
-        left: -0.2em;
-        right: -0.2em;
-        bottom: 0.2em;
-        border-radius: 1px;
-        background: $color--highlight;
+        top: -0.875rem;
+        left: -0.1875 - 0.875rem;
+        //border-radius: 1px;
+        //background: $color--highlight;
+        background: url('/flashlights/images/highlights/highlights.png') no-repeat top left;
+        background-size: (1668px / 2) (588px / 2);
+        width: (556px / 2);
+        height: (98px / 2);
       }
       &.highlighted .highlight {
         @include animation(highlight 3s ease-out);
