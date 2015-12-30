@@ -1,0 +1,5 @@
+name: highlights_generator
+dependencies:
+  image: ^1.1.0
+  logging: ^0.11.0
+  path: ^1.3.9

@@ -1,3 +1,5 @@
+"use strict";
+
 var phrases = [], allTimeElements = document.querySelectorAll('span[data-time]');
 
 
@@ -56,17 +58,18 @@ function handleEvent(time) {
 }
 
 
-function parseTimeForElements(elements, timeShift) {
+function parseTimeForElements(elements, textName, timeShift) {
   for (var i = 0, span; span = elements[i]; i++) {
     var time = parseFloat(span.getAttribute('data-time'));
     if (isNaN(time)) break;
 
     if (timeShift) time += timeShift;
 
-    _parseTimeForElement(time, span);
+    _parseTimeForElement(time, span, textName, i);
   }
 }
-function _parseTimeForElement(time, element) {
+
+function _parseTimeForElement(time, element, textName, i) {
   var length = phrases.push({
     start: time,
     end: time + 2,
@@ -79,6 +82,23 @@ function _parseTimeForElement(time, element) {
     highlight.className = 'highlight';
     element.appendChild(highlight);
     element.hasHighlightElement = true;
+
+    var spriteMapInfo = sprites[textName];
+    var spriteInfo = spriteMapInfo.sprites[i];
+
+    if (!spriteInfo) {
+      console.warn('No sprite info for ' + textName + ' sprite nr. ' + i);
+    }
+    else {
+      highlight.style.backgroundImage = 'url("images/highlights/' + textName + '.png")';
+      highlight.style.backgroundSize = spriteMapInfo.totalWidth + 'px ' + spriteMapInfo.totalHeight + 'px';
+      highlight.style.backgroundPositionX = -(spriteInfo.x) + 'px';
+      highlight.style.width = spriteInfo.width + 'px';
+      highlight.style.height = spriteInfo.height + 'px';
+      highlight.style.marginLeft = - Math.round(spriteInfo.width / 2 - spriteInfo.offsetX) + 'px';
+      highlight.style.marginTop = - Math.round(spriteInfo.height / 2 - spriteInfo.offsetY) + 'px';
+    }
+
   }
 
   if (length > 1) { // Not the first element, so we want to set the previous end time to this start time
@@ -89,22 +109,23 @@ function _parseTimeForElement(time, element) {
   }
 }
 
-parseTimeForElements(document.querySelectorAll('.block__lyrics span[data-time]'));
-parseTimeForElements(document.querySelectorAll('.block__lyrics--second-verse span[data-time]'));
+parseTimeForElements(document.querySelectorAll('.block__lyrics span[data-time]'), 'verse1');
+parseTimeForElements(document.querySelectorAll('.block__lyrics--second-verse span[data-time]'), 'verse2');
 var chorusElements = document.querySelectorAll('.block__lyrics--chorus span[data-time]');
-parseTimeForElements(chorusElements, 0);
+parseTimeForElements(chorusElements, 'chorus', 0);
 // Adding the same lyrics for the two other choruses
-parseTimeForElements(chorusElements, 71.72);
-parseTimeForElements(chorusElements, 89.6);
+parseTimeForElements(chorusElements, 'chorus', 71.72);
+parseTimeForElements(chorusElements, 'chorus', 89.6);
 
 function highlightPhrase(time) {
-  for (var i = 0, span; span = allTimeElements[i]; i++) {
-    span.classList.remove('highlighted');
-  }
-
   for (var ii = 0, phrase; phrase = phrases[ii]; ii++) {
     if (phrase.start < time && phrase.end > time) {
-      phrase.element.classList.add('highlighted');
+      !function(phrase) {
+        phrase.element.classList.add('highlighted');
+        setTimeout(function () {
+          phrase.element.classList.remove('highlighted');
+        }, 3000);
+      }(phrase);
       if (phrase.heart && !phrase.heart.classList.contains('beat')) {
         !function (heart) {
           heart.classList.add('beat');
@@ -276,7 +297,6 @@ document.querySelector('.player-controls__click-area').addEventListener('click',
 });
 document.querySelector('.player-controls__click-area').addEventListener('mousemove', function(event) {
   var offset = getMouseOffset(event);
-  //var width = 100 * offset / playerControls.clientWidth;
   playerControlsCursorFollow.style.width = offset + 'px';
 });
 

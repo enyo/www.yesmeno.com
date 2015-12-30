@@ -9,10 +9,13 @@ $color--highlight: #FF0069;
 $breakpoint: 660px;
 
 @include keyframes(highlight) {
-  from {
+  0% {
     opacity: 1;
   }
-  to {
+  80% {
+  opacity: 1;
+  }
+  100% {
     opacity: 0;
   }
 }
@@ -224,17 +227,12 @@ main {
       .highlight {
         opacity: 0;
         position: absolute;
-        top: -0.875rem;
-        left: -0.1875 - 0.875rem;
-        //border-radius: 1px;
-        //background: $color--highlight;
-        background: url('/flashlights/images/highlights/highlights.png') no-repeat top left;
-        background-size: (1668px / 2) (588px / 2);
-        width: (556px / 2);
-        height: (98px / 2);
+        top: 50%;
+        left: 50%;
+        background-repeat: no-repeat;
       }
       &.highlighted .highlight {
-        @include animation(highlight 3s ease-out);
+        @include animation(highlight 2.2s ease-out);
       }
       .heart {
         opacity: 0;

@@ -1,3 +1,5 @@
+---
+---
 <!doctype html>
 
 <meta charset="utf-8">
@@ -45,7 +47,8 @@
           <span data-time="41.9">it</span>
         </div>
         <div class="block__lyrics__line">
-          <span data-time="41.9">could have been for me...</span>
+          <span data-time="41.9">could have been for</span>
+          <span data-time="41.9">me...</span>
           <span data-time="44.2">just imagine</span>
         </div>
         <div class="block__lyrics__line">
@@ -157,4 +160,11 @@
   <div class="player-controls__click-area"></div>
 </div>
 
+<script>
+  var sprites = {};
+  sprites.verse1 = {% include flashlights/verse1.json %};
+  sprites.verse2 = {% include flashlights/verse2.json %};
+  sprites.chorus = {% include flashlights/chorus.json %};
+
+</script>
 <script src="/flashlights/script/app.js"></script>
