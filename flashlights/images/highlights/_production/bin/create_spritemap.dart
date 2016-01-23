@@ -7,7 +7,8 @@ import 'package:path/path.dart' as path;
 import 'package:image/image.dart';
 import 'package:logging/logging.dart';
 
-List images = ['_verse1.png'];
+//List images = ['_verse1.png', '_verse2.png', '_chorus.png'];
+List images = ['_verse2.png'];
 
 String highlightsDir = new Directory.fromUri(Platform.script).parent.parent.parent.path;
 String jsonDir = path.join(
@@ -35,7 +36,6 @@ createSpritemap(String filename) async {
 
   for (var i = 0; i < sourceImage.height / lineHeight; i++) {
     log.info('Processing image nr. $i');
-    int minX = 0, minY = 0, maxX = sourceImage.width, maxY = lineHeight;
 
     log.fine('Copying image to a temporary sprite image...');
     var untrimmedSpriteImage = copyCrop(sourceImage, 0, i * lineHeight, sourceImage.width, lineHeight);
