@@ -2,17 +2,23 @@
 
 var phrases = [], allTimeElements = document.querySelectorAll('span[data-time]');
 
+/**
+ * Makes sure any time shifts are accounted for
+ */
+function t(time) {
+  return time + 0.9;
+}
 
 var events = {
   appear: {
-    time: 27, active: false, in: function () {
+    time: t(27), active: false, in: function () {
       document.querySelector('.intro').classList.add('lyrics-visible');
     }, out: function () {
       document.querySelector('.intro').classList.remove('lyrics-visible')
     }
   },
   disappear: {
-    time: 163, active: false, in: function () {
+    time: t(163), active: false, in: function () {
       document.querySelector('.intro').classList.add('lyrics-invisible');
       document.querySelector('.intro').classList.remove('lyrics-visible');
     }, out: function (time) {
@@ -24,14 +30,14 @@ var events = {
     }
   },
   switchVerse: {
-    time: 73.5, active: false, in: function () {
+    time: t(73.5), active: false, in: function () {
       document.querySelector('.block').classList.add('second-verse');
     }, out: function () {
       document.querySelector('.block').classList.remove('second-verse');
     }
   },
   blackOut: {
-    time: 73.28, endTime: 75, active: false, in: function () {
+    time: t(73.28), endTime: t(75), active: false, in: function () {
       document.querySelector('.intro').classList.add('blackout');
     }, out: function () {
       document.querySelector('.intro').classList.remove('blackout');
@@ -60,7 +66,7 @@ function handleEvent(time) {
 
 function parseTimeForElements(elements, textName, timeShift) {
   for (var i = 0, span; span = elements[i]; i++) {
-    var time = parseFloat(span.getAttribute('data-time'));
+    var time = t(parseFloat(span.getAttribute('data-time')));
     if (isNaN(time)) break;
 
     if (timeShift) time += timeShift;
@@ -114,8 +120,8 @@ parseTimeForElements(document.querySelectorAll('.block__lyrics--second-verse spa
 var chorusElements = document.querySelectorAll('.block__lyrics--chorus span[data-time]');
 parseTimeForElements(chorusElements, 'chorus', 0);
 // Adding the same lyrics for the two other choruses
-parseTimeForElements(chorusElements, 'chorus', 71.72);
-parseTimeForElements(chorusElements, 'chorus', 89.6);
+parseTimeForElements(chorusElements, 'chorus', t(71.72));
+parseTimeForElements(chorusElements, 'chorus', t(89.6));
 
 function highlightPhrase(time) {
   for (var ii = 0, phrase; phrase = phrases[ii]; ii++) {
@@ -147,7 +153,7 @@ function shakeOnTime(time) {
   }
 }
 
-var shakeTimes = [10.52, 127.04], lastShake = 0;
+var shakeTimes = [t(10.52), t(127.04)], lastShake = 0;
 var introElement = document.querySelector('.intro');
 function shake() {
   if (new Date().getTime() < lastShake + 1000) return;
@@ -203,7 +209,8 @@ function onYouTubeIframeAPIReady() {
     height: '720',
     width: '1280',
     //videoId: 'wDpgJB0iSz0',
-    videoId: 'ph1C-dtR8aM',
+    //videoId: 'ph1C-dtR8aM',
+    videoId: 'sFBFkZYGgcE',
     playerVars: {
       modestbranding: 1,
       showinfo: 0,

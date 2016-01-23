@@ -8,7 +8,7 @@ import 'package:image/image.dart';
 import 'package:logging/logging.dart';
 
 //List images = ['_verse1.png', '_verse2.png', '_chorus.png'];
-List images = ['_verse2.png'];
+List images = ['_chorus.png'];
 
 String highlightsDir = new Directory.fromUri(Platform.script).parent.parent.parent.path;
 String jsonDir = path.join(
