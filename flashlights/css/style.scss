@@ -13,7 +13,7 @@ $breakpoint: 660px;
     opacity: 1;
   }
   80% {
-  opacity: 1;
+    opacity: 1;
   }
   100% {
     opacity: 0;
@@ -84,17 +84,32 @@ p {
   margin: 0;
 }
 
+@font-face {
+  font-family: 'Frutiger Neue';
+  font-style: normal;
+  font-weight: 100;
+  src: local('FrutigerNeueLTPro-Book'), url('../fonts/NeueFrutigerProBook.woff') format('woff'), url('../fonts/NeueFrutigerProBook.otf') format('otf');
+}
+
+@font-face {
+  font-family: 'Frutiger Neue';
+  font-style: normal;
+  font-weight: 400;
+  src: local('FrutigerNeueLTPro-Bold'), url('../fonts/NeueFrutigerProBold.woff') format('woff'), url('../fonts/NeueFrutigerProBold.otf') format('otf');
+}
+
+
 %font-stack--body {
-  font-family: "FrutigerNeueLTPro-Book", sans-serif;
+  font-family: "Frutiger Neue", sans-serif;
   font-weight: 100;
   color: #E8E8E8;
   line-height: $lh;
 }
 
 %font-stack--title {
-  font-family: "FrutigerNeueLTPro-Bold", sans-serif;
+  font-family: "Frutiger Neue", sans-serif;
   color: white;
-  font-weight: bold;
+  font-weight: 400;
   font-size: 1rem;
   text-transform: uppercase;
   line-height: 3*$lh;
@@ -105,7 +120,6 @@ main {
   position: relative;
   overflow: hidden;
 }
-
 
 .intro {
   position: relative;
@@ -137,7 +151,6 @@ main {
     }
   }
 }
-
 
 .block {
 
@@ -276,7 +289,6 @@ main {
   }
 }
 
-
 @media only screen and (max-width: $breakpoint) {
   .block.first, .block__lyrics, .block__lyrics--chorus, .player-controls {
     display: none;
@@ -309,7 +321,6 @@ main {
     }
   }
 }
-
 
 @media only screen and (min-width: $breakpoint) {
   main {
@@ -346,8 +357,6 @@ main {
     }
   }
 }
-
-
 
 // Player controls
 .player-controls {
