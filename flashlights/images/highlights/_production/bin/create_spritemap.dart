@@ -7,8 +7,7 @@ import 'package:path/path.dart' as path;
 import 'package:image/image.dart';
 import 'package:logging/logging.dart';
 
-//List images = ['_verse1.png', '_verse2.png', '_chorus.png'];
-List images = ['_chorus.png'];
+Map<String, String> images = {'v1': '_verse1.png', 'v2': '_verse2.png', 'c': '_chorus.png'};
 
 String highlightsDir = new Directory.fromUri(Platform.script).parent.parent.parent.path;
 String jsonDir = path.join(
@@ -16,11 +15,35 @@ String jsonDir = path.join(
 
 Logger log = new Logger('Generator');
 
-main() async {
+main(List args) async {
   Logger.root.level = Level.INFO;
   Logger.root.onRecord.listen(print);
 
-  await images.forEach(createSpritemap);
+  if (args.isEmpty) {
+    print('Usage: dart create_spritemap <options>');
+    print('');
+    print('Options:');
+    print('  -v1: Verse 1');
+    print('  -v2: Verse 2');
+    print('  -c: Chorus');
+    print('  -a: all');
+  }
+
+  var selectedImages = [];
+
+  if (args.contains('-a')) selectedImages = images.values;
+  else {
+    selectedImages = images.keys.where((key) => args.contains('-$key')).map((key) => images[key]);
+  }
+
+  if (selectedImages.isEmpty) {
+    print('Invalid options $args');
+    exit(1);
+  }
+
+  for (var img in selectedImages) {
+    await createSpritemap(img);
+  }
 }
 
 createSpritemap(String filename) async {

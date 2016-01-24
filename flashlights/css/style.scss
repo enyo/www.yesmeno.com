@@ -4,7 +4,7 @@
 @import "bourbon/bourbon";
 @import "normalize";
 
-$lh: 1.5rem;
+$lh: 2rem;
 $color--highlight: #FF0069;
 $breakpoint: 660px;
 
@@ -112,19 +112,20 @@ main {
   max-width: 37.5rem;
   margin: auto;
   z-index: 100;
-  padding: 3*$lh $lh 0 $lh;
+  padding: 4*$lh $lh 0 $lh;
   &.blackout {
     @include animation(blackout 5s ease-in);
   }
   &__title {
 
-    $image-width: 772px;
+    $image-width: 190px;
+    $image-height: 86px;
     $content-width: 600px;
 
     position: relative;
     margin: 0;
     width: 100%;
-    padding-bottom: 30%;
+    height: 86px;
     margin-bottom: $lh;
     pointer-events: none;
     img {
@@ -132,7 +133,6 @@ main {
       top: 0;
       left: 0;
       margin-left: ((($content-width - $image-width)/2) / $content-width) * 100%;
-      margin-top: -16%;
       width: $image-width/$content-width*100%;
     }
   }
@@ -314,16 +314,19 @@ main {
   main {
     height: 100vh;
   }
-  .video-loaded .player {
+  #player {
+    opacity: 0;
+  }
+  .video-loaded #player {
     opacity: 1;
   }
   .player {
-    opacity: 0;
     position: absolute;
     width: 100vw;
     height: 100vh;
     bottom: 0;
     overflow: hidden;
+    background: url("../images/first-frame.jpg") no-repeat center center;
     iframe {
       position: absolute;
       top: 0;

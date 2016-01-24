@@ -101,8 +101,8 @@ function _parseTimeForElement(time, element, textName, i) {
       highlight.style.backgroundPositionX = -(spriteInfo.x) + 'px';
       highlight.style.width = spriteInfo.width + 'px';
       highlight.style.height = spriteInfo.height + 'px';
-      highlight.style.marginLeft = - Math.round(spriteInfo.width / 2 - spriteInfo.offsetX) + 'px';
-      highlight.style.marginTop = - Math.round(spriteInfo.height / 2 - spriteInfo.offsetY) + 'px';
+      highlight.style.marginLeft = -Math.round(spriteInfo.width / 2 - spriteInfo.offsetX) + 'px';
+      highlight.style.marginTop = -Math.round(spriteInfo.height / 2 - spriteInfo.offsetY) + 'px';
     }
 
   }
@@ -120,13 +120,13 @@ parseTimeForElements(document.querySelectorAll('.block__lyrics--second-verse spa
 var chorusElements = document.querySelectorAll('.block__lyrics--chorus span[data-time]');
 parseTimeForElements(chorusElements, 'chorus', 0);
 // Adding the same lyrics for the two other choruses
-parseTimeForElements(chorusElements, 'chorus', t(71.72));
-parseTimeForElements(chorusElements, 'chorus', t(89.6));
+parseTimeForElements(chorusElements, 'chorus', 71.72);
+parseTimeForElements(chorusElements, 'chorus', 89.6);
 
 function highlightPhrase(time) {
   for (var ii = 0, phrase; phrase = phrases[ii]; ii++) {
     if (phrase.start < time && phrase.end > time) {
-      !function(phrase) {
+      !function (phrase) {
         phrase.element.classList.add('highlighted');
         setTimeout(function () {
           phrase.element.classList.remove('highlighted');
@@ -252,7 +252,9 @@ var intervalId, intervalDelay = 25;
 
 function startFollowingTime() {
   if (!intervalId) {
-    document.body.classList.add('video-loaded');
+    setTimeout(function () {
+      document.body.classList.add('video-loaded');
+    }, 1000);
     intervalId = setInterval(_updateTime, intervalDelay);
   }
 }
@@ -280,7 +282,7 @@ function stopFollowingTime() {
 }
 
 
-document.querySelector('.player__mouse-capture').addEventListener('click', function() {
+document.querySelector('.player__mouse-capture').addEventListener('click', function () {
   if (isPlaying) {
     player.pauseVideo();
   }
@@ -296,14 +298,14 @@ function updateProgress(time) {
   var percentage = 100 * time / totalDuration;
   playerControlsProgress.style.width = percentage + '%';
 }
-document.querySelector('.player-controls__click-area').addEventListener('click', function(event) {
+document.querySelector('.player-controls__click-area').addEventListener('click', function (event) {
   var offset = getMouseOffset(event);
   var seekTime = totalDuration * offset / playerControls.clientWidth;
   player.seekTo(seekTime);
   updateProgress(seekTime);
   player.playVideo();
 });
-document.querySelector('.player-controls__click-area').addEventListener('mousemove', function(event) {
+document.querySelector('.player-controls__click-area').addEventListener('mousemove', function (event) {
   var offset = getMouseOffset(event);
   playerControlsCursorFollow.style.width = offset + 'px';
 });
