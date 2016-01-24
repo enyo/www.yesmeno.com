@@ -98,7 +98,7 @@ function _parseTimeForElement(time, element, textName, i) {
     else {
       highlight.style.backgroundImage = 'url("images/highlights/' + textName + '.png")';
       highlight.style.backgroundSize = spriteMapInfo.totalWidth + 'px ' + spriteMapInfo.totalHeight + 'px';
-      highlight.style.backgroundPositionX = -(spriteInfo.x) + 'px';
+      highlight.style.backgroundPosition = -(spriteInfo.x) + 'px 0';
       highlight.style.width = spriteInfo.width + 'px';
       highlight.style.height = spriteInfo.height + 'px';
       highlight.style.marginLeft = -Math.round(spriteInfo.width / 2 - spriteInfo.offsetX) + 'px';
