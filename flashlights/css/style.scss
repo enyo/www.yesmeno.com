@@ -243,8 +243,9 @@ main {
         top: 0;
         left: 50%;
         margin-left: -($lh/2);
-        background: url("../images/heart-icon.svg") top left no-repeat;
-        &.beat {
+        background: url("../images/heart-icon.svg") center no-repeat;
+        transform-origin: center;
+        &.beat, &:hover {
           @include animation(heartbeat 0.8s ease-out);
         }
       }
