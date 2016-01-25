@@ -13,94 +13,57 @@ function t(time) {
   return time + 0.9;
 }
 
+function _addClass(name) {
+  introElement.classList.add(name);
+}
+function _removeClass(name) {
+  introElement.classList.remove(name);
+}
+
 // The default state is without any class, so all events need to go back to this state at the end
 var events = [
   {
-    name: 'part1',
-    time: t(27),
-    endTime: t(73.4),
-    in: function () {
-      introElement.classList.add('lyrics-visible');
-    },
-    out: function () {
-      introElement.classList.remove('lyrics-visible');
-    }
-  },
-  {
-    name: 'part2',
-    time: t(90),
-    endTime: t(170),
-    in: function () {
-      introElement.classList.add('lyrics-visible');
-    },
-    out: function () {
-      introElement.classList.remove('lyrics-visible');
-    }
-  },
-  {
+    name: 'part1', time: t(27), endTime: t(73.4),
+    in: function () { _addClass('lyrics-visible'); },
+    out: function () { _removeClass('lyrics-visible'); }
+  }, {
+    name: 'part2', time: t(90), endTime: t(170),
+    in: function () { _addClass('lyrics-visible'); },
+    out: function () { _removeClass('lyrics-visible'); }
+  }, {
     // Removing the blackout class whenever there is no blackout
-    name: 'blackOutBefore',
-    time: 0,
-    endTime: t(73.27),
-    in: function () {
-      introElement.classList.remove('blackout');
-    }
-  },
-  {
+    name: 'blackOutBefore', time: 0, endTime: t(73.27),
+    in: function () { _removeClass('blackout'); }
+  }, {
     // Removing the blackout class whenever there is no blackout
-    name: 'blackOutAfter',
-    time: t(80),
-    endTime: 1000,
-    in: function () {
-      introElement.classList.remove('blackout');
-    }
-  },
-  {
+    name: 'blackOutAfter', time: t(80), endTime: 1000,
+    in: function () { _removeClass('blackout'); }
+  }, {
     // Adding the blackout class.
     // Since the blackout takes some time to execute, and removing the class creates a visible
     // jitter, and we don't want the window of when to trigger the blackout to be too big, I don't remove
     // it here, but remove it a lot later with blackOutAfter (or Before).
-    name: 'blackOut',
-    time: t(73.28),
-    endTime: t(75),
+    name: 'blackOut', time: t(73.28), endTime: t(75),
+    in: function () { _addClass('blackout'); }
+  }, {
+    name: 'verse2', time: t(73.4), endTime: 1000,
+    in: function () { blockElement.classList.add('second-verse'); },
+    out: function () { blockElement.classList.remove('second-verse'); }
+  }, {
+    name: 'disappear', time: t(163), endTime: 1000,
     in: function () {
-      introElement.classList.add('blackout');
-    }
-  },
-  {
-    name: 'verse2',
-    time: t(73.4),
-    endTime: 1000,
-    in: function () {
-      blockElement.classList.add('second-verse');
-    },
-    out: function () {
-      blockElement.classList.remove('second-verse');
-    }
-  },
-  {
-    name: 'disappear',
-    time: t(163),
-    endTime: 1000,
-    in: function () {
-      introElement.classList.add('lyrics-invisible');
-      introElement.classList.remove('lyrics-visible');
+      _addClass('lyrics-invisible');
+      _removeClass('lyrics-visible');
     },
     out: function (time) {
-      introElement.classList.remove('lyrics-invisible');
-      introElement.classList.add('lyrics-visible')
+      _removeClass('lyrics-invisible');
+      _addClass('lyrics-visible')
     }
-  },
-  {
-    name: 'shake1',
-    time: t(10.52),
-    endTime: t(11.02),
+  }, {
+    name: 'shake1', time: t(10.52), endTime: t(11.02),
     in: shake
-  },
-  {
-    name: 'shake2',
-    time: t(127.04),
-    endTime: t(127.54),
+  }, {
+    name: 'shake2', time: t(127.04), endTime: t(127.54),
     in: shake
   }
 ];
