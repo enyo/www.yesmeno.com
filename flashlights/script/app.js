@@ -2,6 +2,10 @@
 
 var phrases = [], allTimeElements = document.querySelectorAll('span[data-time]');
 
+var introElement = document.querySelector('.intro'),
+    blockElement = document.querySelector('.block');
+
+
 /**
  * Makes sure any time shifts are accounted for
  */
@@ -9,58 +13,134 @@ function t(time) {
   return time + 0.9;
 }
 
-var events = {
-  appear: {
-    time: t(27), active: false, in: function () {
-      document.querySelector('.intro').classList.add('lyrics-visible');
-    }, out: function () {
-      document.querySelector('.intro').classList.remove('lyrics-visible')
+// The default state is without any class, so all events need to go back to this state at the end
+var events = [
+  {
+    name: 'part1',
+    time: t(27),
+    endTime: t(73.4),
+    in: function () {
+      introElement.classList.add('lyrics-visible');
+    },
+    out: function () {
+      introElement.classList.remove('lyrics-visible');
     }
   },
-  disappear: {
-    time: t(163), active: false, in: function () {
-      document.querySelector('.intro').classList.add('lyrics-invisible');
-      document.querySelector('.intro').classList.remove('lyrics-visible');
-    }, out: function (time) {
-      document.querySelector('.intro').classList.remove('lyrics-invisible')
-      if (time > events.appear.time) {
-        // Make sure that the lyrics appear properly when necessary
-        document.querySelector('.intro').classList.add('lyrics-visible')
-      }
+  {
+    name: 'part2',
+    time: t(90),
+    endTime: t(170),
+    in: function () {
+      introElement.classList.add('lyrics-visible');
+    },
+    out: function () {
+      introElement.classList.remove('lyrics-visible');
     }
   },
-  switchVerse: {
-    time: t(73.5), active: false, in: function () {
-      document.querySelector('.block').classList.add('second-verse');
-    }, out: function () {
-      document.querySelector('.block').classList.remove('second-verse');
+  {
+    // Removing the blackout class whenever there is no blackout
+    name: 'blackOutBefore',
+    time: 0,
+    endTime: t(73.27),
+    in: function () {
+      introElement.classList.remove('blackout');
     }
   },
-  blackOut: {
-    time: t(73.28), endTime: t(75), active: false, in: function () {
-      document.querySelector('.intro').classList.add('blackout');
-    }, out: function () {
-      document.querySelector('.intro').classList.remove('blackout');
+  {
+    // Removing the blackout class whenever there is no blackout
+    name: 'blackOutAfter',
+    time: t(80),
+    endTime: 1000,
+    in: function () {
+      introElement.classList.remove('blackout');
     }
+  },
+  {
+    // Adding the blackout class.
+    // Since the blackout takes some time to execute, and removing the class creates a visible
+    // jitter, and we don't want the window of when to trigger the blackout to be too big, I don't remove
+    // it here, but remove it a lot later with blackOutAfter (or Before).
+    name: 'blackOut',
+    time: t(73.28),
+    endTime: t(75),
+    in: function () {
+      introElement.classList.add('blackout');
+    }
+  },
+  {
+    name: 'verse2',
+    time: t(73.4),
+    endTime: 1000,
+    in: function () {
+      blockElement.classList.add('second-verse');
+    },
+    out: function () {
+      blockElement.classList.remove('second-verse');
+    }
+  },
+  {
+    name: 'disappear',
+    time: t(163),
+    endTime: 1000,
+    in: function () {
+      introElement.classList.add('lyrics-invisible');
+      introElement.classList.remove('lyrics-visible');
+    },
+    out: function (time) {
+      introElement.classList.remove('lyrics-invisible');
+      introElement.classList.add('lyrics-visible')
+    }
+  },
+  {
+    name: 'shake1',
+    time: t(10.52),
+    endTime: t(11.02),
+    in: shake
+  },
+  {
+    name: 'shake2',
+    time: t(127.04),
+    endTime: t(127.54),
+    in: shake
   }
-};
+];
 
 function handleEvent(time) {
-  for (var eventName in events) {
-    if (events.hasOwnProperty(eventName)) {
-      var event = events[eventName];
-      if (time > event.time && !event.active) {
-        if (!event.endTime || time < event.endTime) {
-          event.active = true;
-          event.in(time);
-        }
-      }
-      else if (time < event.time && event.active) {
-        event.active = false;
-        event.out(time);
+  var i, event, exitingEvents = [], currentEvents = [];
+
+  for (i = 0; i < events.length; i++) {
+    event = events[i];
+
+    if (event.time < time && event.endTime > time) {
+      currentEvents.push(event);
+    }
+    else if (event.active) {
+      exitingEvents.push(event);
+    }
+  }
+
+  // First do all exiting events
+  for (i = 0; i < exitingEvents.length; i++) {
+    event = exitingEvents[i];
+    event.active = false;
+    if (event.out) {
+      console.log('Exiting ' + event.name);
+      event.out();
+    }
+  }
+
+  // Then enter the events
+  for (i = 0; i < currentEvents.length; i++) {
+    event = currentEvents[i];
+    if (!event.active) {
+      event.active = true;
+      if (event.in) {
+        console.log('Entering ' + event.name);
+        event.in(time);
       }
     }
   }
+
 }
 
 
@@ -144,21 +224,7 @@ function highlightPhrase(time) {
   }
 }
 
-function shakeOnTime(time) {
-  for (var i = 0; i < shakeTimes.length; i++) {
-    var shakeTime = shakeTimes[i];
-    if (time > shakeTime && time < shakeTime + 0.5) {
-      shake();
-    }
-  }
-}
-
-var shakeTimes = [t(10.52), t(127.04)], lastShake = 0;
-var introElement = document.querySelector('.intro');
 function shake() {
-  if (new Date().getTime() < lastShake + 1000) return;
-
-  lastShake = new Date().getTime();
   var _shake = function (strength, reset) {
     var x, y, opacity;
     if (reset) {
@@ -271,7 +337,6 @@ function _updateTime() {
     exactTime += intervalDelay / 1000;
   }
   highlightPhrase(exactTime);
-  shakeOnTime(exactTime);
   handleEvent(exactTime);
   updateProgress(exactTime);
 }
