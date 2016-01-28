@@ -20,35 +20,56 @@ function _removeClass(name) {
   introElement.classList.remove(name);
 }
 
+/**
+ * Returns a function you can use as a shortcut for adding a class
+ */
+function _addCallback(name) {
+  return function () {
+    _addClass(name);
+  };
+}
+/**
+ * Returns a function you can use as a shortcut for removing a class
+ */
+function _removeCallback(name) {
+  return function () {
+    _removeClass(name);
+  };
+}
+
 // The default state is without any class, so all events need to go back to this state at the end
 var events = [
   {
     name: 'part1', time: t(27), endTime: t(73.4),
-    in: function () { _addClass('lyrics-visible'); },
-    out: function () { _removeClass('lyrics-visible'); }
+    in: _addCallback('lyrics-visible'),
+    out: _removeCallback('lyrics-visible')
   }, {
     name: 'part2', time: t(90), endTime: t(170),
-    in: function () { _addClass('lyrics-visible'); },
-    out: function () { _removeClass('lyrics-visible'); }
+    in: _addCallback('lyrics-visible'),
+    out: _removeCallback('lyrics-visible')
   }, {
     // Removing the blackout class whenever there is no blackout
     name: 'blackOutBefore', time: 0, endTime: t(73.27),
-    in: function () { _removeClass('blackout'); }
+    in: _removeCallback('blackout')
   }, {
     // Removing the blackout class whenever there is no blackout
     name: 'blackOutAfter', time: t(80), endTime: 1000,
-    in: function () { _removeClass('blackout'); }
+    in: _removeCallback('blackout')
   }, {
     // Adding the blackout class.
     // Since the blackout takes some time to execute, and removing the class creates a visible
     // jitter, and we don't want the window of when to trigger the blackout to be too big, I don't remove
     // it here, but remove it a lot later with blackOutAfter (or Before).
     name: 'blackOut', time: t(73.28), endTime: t(75),
-    in: function () { _addClass('blackout'); }
+    in: _addCallback('blackout')
   }, {
     name: 'verse2', time: t(73.4), endTime: 1000,
-    in: function () { blockElement.classList.add('second-verse'); },
-    out: function () { blockElement.classList.remove('second-verse'); }
+    in: function () {
+      blockElement.classList.add('second-verse');
+    },
+    out: function () {
+      blockElement.classList.remove('second-verse');
+    }
   }, {
     name: 'disappear', time: t(163), endTime: 1000,
     in: function () {
@@ -119,36 +140,36 @@ function parseTimeForElements(elements, textName, timeShift) {
 }
 
 function _parseTimeForElement(time, element, textName, i) {
+  var highlightAddon = textName == 'chorus2' ? '2' : (textName == 'chorus3' ? '3' : '');
   var length = phrases.push({
     start: time,
     end: time + 2,
     element: element,
+    highlightAddon: highlightAddon,
     heart: element.querySelector('.heart')
   });
 
-  if (!element.hasHighlightElement) {
-    var highlight = document.createElement('span');
-    highlight.className = 'highlight';
-    element.appendChild(highlight);
-    element.hasHighlightElement = true;
+  var highlight = document.createElement('span');
+  highlight.className = 'highlight' + highlightAddon;
+  element.appendChild(highlight);
 
-    var spriteMapInfo = sprites[textName];
-    var spriteInfo = spriteMapInfo.sprites[i];
+  var spriteMapInfo = sprites[textName];
+  var spriteInfo = spriteMapInfo.sprites[i];
 
-    if (!spriteInfo) {
-      console.warn('No sprite info for ' + textName + ' sprite nr. ' + i);
-    }
-    else {
-      highlight.style.backgroundImage = 'url("images/highlights/' + textName + '.png")';
-      highlight.style.backgroundSize = spriteMapInfo.totalWidth + 'px ' + spriteMapInfo.totalHeight + 'px';
-      highlight.style.backgroundPosition = -(spriteInfo.x) + 'px 0';
-      highlight.style.width = spriteInfo.width + 'px';
-      highlight.style.height = spriteInfo.height + 'px';
-      highlight.style.marginLeft = -Math.round(spriteInfo.width / 2 - spriteInfo.offsetX) + 'px';
-      highlight.style.marginTop = -Math.round(spriteInfo.height / 2 - spriteInfo.offsetY) + 'px';
-    }
-
+  if (!spriteInfo) {
+    console.warn('No sprite info for ' + textName + ' sprite nr. ' + i);
   }
+  else {
+    highlight.style.backgroundImage = 'url("images/highlights/' + textName + '.png")';
+    highlight.style.backgroundSize = spriteMapInfo.totalWidth + 'px ' + spriteMapInfo.totalHeight + 'px';
+    highlight.style.backgroundPosition = -(spriteInfo.x) + 'px 0';
+    highlight.style.width = spriteInfo.width + 'px';
+    highlight.style.height = spriteInfo.height + 'px';
+    highlight.style.marginLeft = -Math.round(spriteInfo.width / 2 - spriteInfo.offsetX) + 'px';
+    highlight.style.marginTop = -Math.round(spriteInfo.height / 2 - spriteInfo.offsetY) + 'px';
+  }
+
+  //}
 
   if (length > 1) { // Not the first element, so we want to set the previous end time to this start time
     var prevPhrase = phrases[length - 2];
@@ -163,16 +184,18 @@ parseTimeForElements(document.querySelectorAll('.block__lyrics--second-verse spa
 var chorusElements = document.querySelectorAll('.block__lyrics--chorus span[data-time]');
 parseTimeForElements(chorusElements, 'chorus', 0);
 // Adding the same lyrics for the two other choruses
-parseTimeForElements(chorusElements, 'chorus', 71.72);
-parseTimeForElements(chorusElements, 'chorus', 89.6);
+parseTimeForElements(chorusElements, 'chorus2', 71.72);
+parseTimeForElements(chorusElements, 'chorus3', 89.6);
 
 function highlightPhrase(time) {
   for (var ii = 0, phrase; phrase = phrases[ii]; ii++) {
     if (phrase.start < time && phrase.end > time) {
       !function (phrase) {
-        phrase.element.classList.add('highlighted');
+        var highlightedClassName = 'highlighted' + phrase.highlightAddon;
+
+        phrase.element.classList.add(highlightedClassName);
         setTimeout(function () {
-          phrase.element.classList.remove('highlighted');
+          phrase.element.classList.remove(highlightedClassName);
         }, 3000);
       }(phrase);
       if (phrase.heart && !phrase.heart.classList.contains('beat')) {

@@ -7,7 +7,13 @@ import 'package:path/path.dart' as path;
 import 'package:image/image.dart';
 import 'package:logging/logging.dart';
 
-Map<String, String> images = {'v1': '_verse1.png', 'v2': '_verse2.png', 'c': '_chorus.png'};
+Map<String, String> images = {
+  'v1': '_verse1.png',
+  'v2': '_verse2.png',
+  'c': '_chorus.png',
+  'c2': '_chorus2.png',
+  'c3': '_chorus3.png'
+};
 
 String highlightsDir = new Directory.fromUri(Platform.script).parent.parent.parent.path;
 String jsonDir = path.join(
@@ -26,6 +32,8 @@ main(List args) async {
     print('  -v1: Verse 1');
     print('  -v2: Verse 2');
     print('  -c: Chorus');
+    print('  -c2: Chorus 2');
+    print('  -c3: Chorus 3');
     print('  -a: all');
   }
 
