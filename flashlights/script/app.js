@@ -160,7 +160,7 @@ function _parseTimeForElement(time, element, textName, i) {
     console.warn('No sprite info for ' + textName + ' sprite nr. ' + i);
   }
   else {
-    highlight.style.backgroundImage = 'url("images/highlights/' + textName + '.png")';
+    highlight.style.backgroundImage = 'url("/flashlights/images/highlights/' + textName + '.png")';
     highlight.style.backgroundSize = spriteMapInfo.totalWidth + 'px ' + spriteMapInfo.totalHeight + 'px';
     highlight.style.backgroundPosition = -(spriteInfo.x) + 'px 0';
     highlight.style.width = spriteInfo.width + 'px';
@@ -260,8 +260,6 @@ function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
     height: '720',
     width: '1280',
-    //videoId: 'wDpgJB0iSz0',
-    //videoId: 'ph1C-dtR8aM',
     videoId: 'sFBFkZYGgcE',
     playerVars: {
       modestbranding: 1,
