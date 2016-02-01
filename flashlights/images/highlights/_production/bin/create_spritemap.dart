@@ -100,10 +100,20 @@ createSpritemap(String filename) async {
     return currentX + sprite.width;
   });
 
-  var targetPath = path.join(highlightsDir, filename.substring(1));
-  log.info('Writing resulting spritemap to $targetPath');
+  var targetFilename = filename.substring(1),
+      targetPath = path.join(highlightsDir, targetFilename);
+
+  log.info('Writing resulting spritemap to $targetFilename');
 
   await new File(targetPath).writeAsBytes(encodePng(finalImage));
+
+  log.info('Optimizing png...');
+  var processResult = await Process.run('optipng', ['-o3', targetFilename, '-out', targetFilename], workingDirectory: highlightsDir);
+
+  print(processResult.stdout);
+  print(processResult.stderr);
+  if (processResult.exitCode != 0) throw new Exception('Unable to optimize png');
+
 
   var json = JSON.encode({
     'totalWidth': (totalWidth / 2).floor(),
