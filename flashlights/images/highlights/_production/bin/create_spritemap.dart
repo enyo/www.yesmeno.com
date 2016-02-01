@@ -108,7 +108,7 @@ createSpritemap(String filename) async {
   await new File(targetPath).writeAsBytes(encodePng(finalImage));
 
   log.info('Optimizing png...');
-  var processResult = await Process.run('optipng', ['-o3', targetFilename, '-out', targetFilename], workingDirectory: highlightsDir);
+  var processResult = await Process.run('optipng', ['-o3', targetFilename], workingDirectory: highlightsDir);
 
   print(processResult.stdout);
   print(processResult.stderr);
