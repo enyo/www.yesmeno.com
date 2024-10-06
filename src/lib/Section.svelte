@@ -14,9 +14,9 @@
 	let position: 'current' | 'before' | 'after' = $derived(
 		backdrop.currentElement === index
 			? 'current'
-			: index < backdrop.currentElement
-				? 'before'
-				: 'after'
+			: backdrop.currentElement !== undefined && index > backdrop.currentElement
+				? 'after'
+				: 'before'
 	)
 
 	let visible = $derived(position === 'current')
@@ -147,6 +147,7 @@
 		transition: opacity 400ms ease;
 		overflow: hidden;
 		z-index: 10;
+		pointer-events: none;
 		&.visible {
 			opacity: 1;
 		}

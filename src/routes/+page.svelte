@@ -1,4 +1,5 @@
 <script lang="ts">
+	import InfoSection from '$lib/InfoSection.svelte'
 	import Section from '$lib/Section.svelte'
 	import { songs } from '$lib/songs'
 </script>
@@ -13,4 +14,4 @@
 	/>
 {/each}
 
-<section></section>
+<InfoSection />
