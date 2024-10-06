@@ -5,11 +5,12 @@ export type Song = {
 	image: string
 }
 export const songs: Song[] = [
-	{
-		name: 'Don’t look back',
-		link: 'https://www.youtube.com/watch?v=GhvvR0uSdg8',
-		image: 'dont_look_back'
-	},
+	// {
+	// 	name: 'Don’t look back',
+	// 	// Wrong link!!
+	// 	link: 'https://www.youtube.com/watch?v=GhvvR0uSdg8',
+	// 	image: 'dont_look_back'
+	// },
 	{ name: 'We follow', link: 'https://www.youtube.com/watch?v=GhvvR0uSdg8', image: 'we_follow' },
 	{
 		name: 'Better heart',
