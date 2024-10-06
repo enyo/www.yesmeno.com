@@ -1,6 +1,8 @@
 <script lang="ts">
 	import '$lib/style/index.css'
 
+	export const prerender = true
+
 	const { children } = $props()
 </script>
 
