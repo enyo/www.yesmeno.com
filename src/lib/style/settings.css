@@ -1,0 +1,15 @@
+:root {
+	--section-height: 100vh;
+
+	--font-text: 'HKGrotesk', -apple-system, sans-serif;
+	--font-display: 'GT-Ultra-Fine', -apple-system sans-serif;
+
+	--color-primary: var(--color-primary-500);
+	--color-primary-500: #8affdc;
+}
+
+@supports (height: 100lvh) {
+	:root {
+		--section-height: 100lvh;
+	}
+}

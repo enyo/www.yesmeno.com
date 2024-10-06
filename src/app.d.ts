@@ -8,6 +8,14 @@ declare global {
 		// interface PageState {}
 		// interface Platform {}
 	}
+
+	namespace svelteHTML {
+		interface HTMLAttributes {
+			onoffset?: (e: CustomEvent<{ top: number; left: number }>) => void
+			onviewenter?: () => void
+			onviewexit?: () => void
+		}
+	}
 }
 
-export {};
+export {}

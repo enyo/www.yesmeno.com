@@ -1,8 +1,8 @@
-import eslint from '@eslint/js';
-import prettier from 'eslint-config-prettier';
-import svelte from 'eslint-plugin-svelte';
-import globals from 'globals';
-import tseslint from 'typescript-eslint';
+import eslint from '@eslint/js'
+import prettier from 'eslint-config-prettier'
+import svelte from 'eslint-plugin-svelte'
+import globals from 'globals'
+import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
 	eslint.configs.recommended,
@@ -29,4 +29,4 @@ export default tseslint.config(
 	{
 		ignores: ['build/', '.svelte-kit/', 'dist/']
 	}
-);
+)

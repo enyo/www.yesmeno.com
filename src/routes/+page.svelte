@@ -1,2 +1,16 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import Section from '$lib/Section.svelte'
+	import { songs } from '$lib/songs'
+</script>
+
+{#each songs as song, index}
+	<Section
+		{index}
+		image="/images/{song.image}.jpg"
+		link={song.link}
+		name={song.name}
+		htmlName={song.htmlName}
+	/>
+{/each}
+
+<section></section>

@@ -1,0 +1,15 @@
+@font-face {
+	font-family: 'Gt-Ultra-Fine';
+	src: url('/fonts/GT-Ultra-Fine-Black.otf');
+	font-weight: 900;
+	font-style: normal;
+}
+
+body,
+html {
+	padding: 0;
+}
+
+body {
+	background: #111;
+}
